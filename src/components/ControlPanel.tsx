@@ -26,6 +26,25 @@ export function ControlPanel({
   // Determinar o valor mínimo da altura baseado na bomba
   const minHead = pump.minHead !== undefined ? pump.minHead : 0;
   
+  // Função para lidar com mudanças no campo de altura
+  const handleHeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Permitir valores vazios, negativos e decimais durante a digitação
+    if (value === '' || value === '-' || value === '-.' || /^-?\d*\.?\d*$/.test(value)) {
+      // Se o valor for válido ou estiver sendo digitado, converter para número
+      const numValue = value === '' || value === '-' || value === '-.' ? 0 : parseFloat(value);
+      
+      // Verificar se está dentro dos limites da bomba
+      if (!isNaN(numValue) && numValue >= minHead && numValue <= pump.maxHead) {
+        onHeadChange(numValue);
+      } else if (value === '' || value === '-' || value === '-.') {
+        // Permitir campos vazios ou com apenas o sinal negativo durante a digitação
+        onHeadChange(0);
+      }
+    }
+  };
+  
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="flex items-center gap-3 mb-6">
@@ -58,12 +77,9 @@ export function ControlPanel({
             Altura (m)
           </label>
           <input
-            type="number"
-            min={minHead}
-            max={pump.maxHead}
-            step="0.5"
+            type="text"
             value={head}
-            onChange={(e) => onHeadChange(Number(e.target.value))}
+            onChange={handleHeadChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             placeholder={`${minHead} - ${pump.maxHead}`}
           />
