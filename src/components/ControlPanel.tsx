@@ -30,17 +30,28 @@ export function ControlPanel({
   const handleHeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
-    // Permitir valores vazios, negativos e decimais durante a digitação
-    if (value === '' || value === '-' || value === '-.' || /^-?\d*\.?\d*$/.test(value)) {
-      // Se o valor for válido ou estiver sendo digitado, converter para número
-      const numValue = value === '' || value === '-' || value === '-.' ? 0 : parseFloat(value);
-      
-      // Verificar se está dentro dos limites da bomba
-      if (!isNaN(numValue) && numValue >= minHead && numValue <= pump.maxHead) {
+    // Permitir campo vazio
+    if (value === '') {
+      onHeadChange(0);
+      return;
+    }
+    
+    // Permitir apenas números, ponto decimal e sinal negativo
+    if (!/^-?\d*\.?\d*$/.test(value)) {
+      return; // Não atualizar se não for um número válido
+    }
+    
+    // Converter para número
+    const numValue = parseFloat(value);
+    
+    // Se for um número válido, atualizar
+    if (!isNaN(numValue)) {
+      // Verificar limites apenas quando o valor estiver completo
+      if (numValue >= minHead && numValue <= pump.maxHead) {
         onHeadChange(numValue);
-      } else if (value === '' || value === '-' || value === '-.') {
-        // Permitir campos vazios ou com apenas o sinal negativo durante a digitação
-        onHeadChange(0);
+      } else {
+        // Ainda permitir a digitação, mas não validar até estar completo
+        onHeadChange(numValue);
       }
     }
   };
