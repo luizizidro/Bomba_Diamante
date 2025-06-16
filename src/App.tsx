@@ -37,7 +37,7 @@ function App() {
             <Wrench className="w-8 h-8 text-blue-600" />
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Sistema de Seleção de Bombas</h1>
-              <p className="text-gray-600 mt-1">Análise de Performance e Características Técnicas</p>
+              <p className="text-gray-600 mt-1">Trabalho Sistema Fluído Mecânico / Prof. Wilson Alano</p>
             </div>
           </div>
         </div>
