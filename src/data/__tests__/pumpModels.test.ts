@@ -33,7 +33,7 @@ describe('pumpModels', () => {
     expect(bombaDiamante).toBeDefined();
     expect(bombaDiamante?.minHead).toBe(-10);
     expect(bombaDiamante?.maxHead).toBe(200);
-    expect(bombaDiamante?.maxFlow).toBe(180);
+    expect(bombaDiamante?.maxFlow).toBe(400);
   });
 
   it('should have BC-21 models with correct specifications', () => {
