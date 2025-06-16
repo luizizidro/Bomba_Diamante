@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Seleção de Bombas - Documentação Técnica</title>
+    <style>
+        /* Estilos otimizados para impressão em PDF */
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+            .avoid-break { page-break-inside: avoid; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #1e40af;
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: bold;
+        }
+        
+        .header p {
+            color: #6b7280;
+            font-size: 1.2em;
+            margin: 10px 0 0 0;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-left: 4px solid #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .section h2 {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-top: 0;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #374151;
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        
+        .pump-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .pump-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .pump-card h4 {
+            color: #1f2937;
+            font-size: 1.3em;
+            margin: 0 0 15px 0;
+            border-bottom: 1px solid #d1d5db;
+            padding-bottom: 8px;
+        }
+        
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.95em;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dotted #d1d5db;
+        }
+        
+        .spec-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+        
+        .spec-value {
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .code-comment {
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .code-keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+        
+        .code-function {
+            color: #34d399;
+        }
+        
+        .code-number {
+            color: #fbbf24;
+        }
+        
+        .code-string {
+            color: #f87171;
+        }
+        
+        .formula {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1em;
+        }
+        
+        .formula-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .tech-name {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+        
+        .tech-desc {
+            font-size: 0.9em;
+            color: #64748b;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+        
+        .print-info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .print-info.no-print {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f3f4f6;
+            font-weight: bold;
+            color: #374151;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-info no-print">
+        <strong>💡 Dica:</strong> Para imprimir em PDF, use Ctrl+P (ou Cmd+P no Mac) e selecione "Salvar como PDF" como destino.
+        <br>Recomenda-se usar orientação retrato e margens mínimas para melhor resultado.
+    </div>
+
+    <header class="header">
+        <h1>Sistema de Seleção de Bombas</h1>
+        <p>Documentação Técnica e Análise de Cálculos</p>
+        <p style="font-size: 1em; color: #9ca3af;">Versão 1.0 | Desenvolvido com React + TypeScript</p>
+    </header>
+
+    <section class="section">
+        <h2>📋 Visão Geral do Sistema</h2>
+        <p>O Sistema de Seleção de Bombas é uma aplicação web avançada desenvolvida para auxiliar engenheiros e técnicos na seleção e análise de bombas centrífugas. O sistema oferece visualização interativa de curvas características, cálculos de performance em tempo real e análise detalhada de pontos de operação.</p>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <div>
+                    <strong>Gráficos Interativos</strong><br>
+                    Visualização das curvas de altura, potência, NPSH e rendimento
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⚙️</div>
+                <div>
+                    <strong>Cálculos Precisos</strong><br>
+                    Interpolação linear para pontos específicos de operação
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔍</div>
+                <div>
+                    <strong>Análise de Performance</strong><br>
+                    Avaliação automática de eficiência e condições operacionais
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <div>
+                    <strong>Design Responsivo</strong><br>
+                    Interface adaptável para desktop, tablet e mobile
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>🔧 Modelos de Bombas Disponíveis</h2>
+        <div class="pump-specs">
+            <div class="pump-card">
+                <h4>BC-21 R 1/2 (Modelo 1)</h4>
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Fabricante:</span>
+                        <span class="spec-value">Indústrias Schneider</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Tipo:</span>
+                        <span class="spec-value">Centrífuga Monoestágio</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Potência:</span>
+                        <span class="spec-value">3 cv</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rotação:</span>
+                        <span class="spec-value">3500 rpm</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Vazão Máxima:</span>
+                        <span class="spec-value">25 m³/h</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Altura Máxima:</span>
+                        <span class="spec-value">45 m</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rendimento:</span>
+                        <span class="spec-value">57.05%</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">NPSHr:</span>
+                        <span class="spec-value">2.87 mca</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pump-card">
+                <h4>BC-21 R 1/2 (Modelo 2)</h4>
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Fabricante:</span>
+                        <span class="spec-value">Indústrias Schneider</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Tipo:</span>
+                        <span class="spec-value">Centrífuga Monoestágio</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Potência:</span>
+                        <span class="spec-value">4 cv</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rotação:</span>
+                        <span class="spec-value">3500 rpm</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Vazão Máxima:</span>
+                        <span class="spec-value">30 m³/h</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Altura Máxima:</span>
+                        <span class="spec-value">50 m</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rendimento:</span>
+                        <span class="spec-value">54.68%</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">NPSHr:</span>
+                        <span class="spec-value">2.87 mca</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pump-card">
+                <h4>Bomba Diamante</h4>
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Fabricante:</span>
+                        <span class="spec-value">Bomba Personalizada</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Tipo:</span>
+                        <span class="spec-value">Centrífuga Industrial</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Potência:</span>
+                        <span class="spec-value">46.5 cv</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rotação:</span>
+                        <span class="spec-value">1700 rpm</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Vazão Máxima:</span>
+                        <span class="spec-value">180 m³/h</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Altura Máxima:</span>
+                        <span class="spec-value">200 m</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Altura Mínima:</span>
+                        <span class="spec-value">-10 m</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Rendimento:</span>
+                        <span class="spec-value">75%</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">NPSHr:</span>
+                        <span class="spec-value">25 mca</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <section class="section avoid-break">
+        <h2>🧮 Algoritmos e Cálculos Matemáticos</h2>
+        
+        <h3>1. Geração das Curvas Características</h3>
+        <p>O sistema gera curvas características para cada bomba usando funções matemáticas que modelam o comportamento real das bombas centrífugas.</p>
+
+        <div class="formula">
+            <div class="formula-title">Curva de Altura Manométrica</div>
+            <strong>H(Q) = H<sub>max</sub> × (1 - 0.8 × (Q/Q<sub>max</sub>)²)</strong>
+            <br><small>Onde: H = altura, Q = vazão, H<sub>max</sub> = altura máxima, Q<sub>max</sub> = vazão máxima</small>
+        </div>
+
+        <div class="code-block">
+<span class="code-comment">// Função para gerar curva de altura</span>
+<span class="code-keyword">const</span> <span class="code-function">headCurve</span> = flowPoints.<span class="code-function">map</span>(flow => {
+  <span class="code-keyword">const</span> normalizedFlow = flow / pump.maxFlow;
+  
+  <span class="code-keyword">if</span> (pump.id === <span class="code-string">'bomba-diamante'</span>) {
+    <span class="code-comment">// Curva especial para Bomba Diamante (suporta alturas negativas)</span>
+    <span class="code-keyword">const</span> headRange = pump.maxHead - (pump.minHead || <span class="code-number">0</span>);
+    <span class="code-keyword">const</span> minHead = pump.minHead || <span class="code-number">0</span>;
+    <span class="code-keyword">return</span> pump.maxHead - headRange * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">1.8</span>);
+  } <span class="code-keyword">else</span> {
+    <span class="code-comment">// Curva padrão para bombas convencionais</span>
+    <span class="code-keyword">return</span> pump.maxHead * (<span class="code-number">1</span> - <span class="code-number">0.8</span> * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">2</span>));
+  }
+});
+        </div>
+
+        <h3>2. Curva de Potência</h3>
+        <div class="formula">
+            <div class="formula-title">Potência Requerida</div>
+            <strong>P(Q) = P<sub>max</sub> × (0.3 + 0.7 × (Q/Q<sub>max</sub>)³)</strong>
+            <br><small>Para bombas industriais: P(Q) = P<sub>max</sub> × (0.2 + 0.8 × (Q/Q<sub>max</sub>)^2.2)</small>
+        </div>
+
+        <div class="code-block">
+<span class="code-comment">// Cálculo da curva de potência</span>
+<span class="code-keyword">const</span> <span class="code-function">powerCurve</span> = flowPoints.<span class="code-function">map</span>(flow => {
+  <span class="code-keyword">const</span> normalizedFlow = flow / pump.maxFlow;
+  
+  <span class="code-keyword">if</span> (pump.id === <span class="code-string">'bomba-diamante'</span>) {
+    <span class="code-comment">// Curva mais realista para bomba industrial</span>
+    <span class="code-keyword">return</span> pump.power * (<span class="code-number">0.2</span> + <span class="code-number">0.8</span> * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">2.2</span>));
+  } <span class="code-keyword">else</span> {
+    <span class="code-comment">// Curva padrão</span>
+    <span class="code-keyword">return</span> pump.power * (<span class="code-number">0.3</span> + <span class="code-number">0.7</span> * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">3</span>));
+  }
+});
+        </div>
+
+        <h3>3. Curva de NPSH (Net Positive Suction Head)</h3>
+        <div class="formula">
+            <div class="formula-title">NPSH Requerido</div>
+            <strong>NPSH(Q) = NPSH<sub>r</sub> × (1 + 2 × (Q/Q<sub>max</sub>)²)</strong>
+            <br><small>Para bombas industriais: NPSH(Q) = NPSH<sub>r</sub> × (Q/Q<sub>max</sub>)^1.5</small>
+        </div>
+
+        <div class="code-block">
+<span class="code-comment">// Cálculo da curva de NPSH</span>
+<span class="code-keyword">const</span> <span class="code-function">npshCurve</span> = flowPoints.<span class="code-function">map</span>(flow => {
+  <span class="code-keyword">const</span> normalizedFlow = flow / pump.maxFlow;
+  
+  <span class="code-keyword">if</span> (pump.id === <span class="code-string">'bomba-diamante'</span>) {
+    <span class="code-comment">// NPSH cresce até o máximo de 25 mca</span>
+    <span class="code-keyword">return</span> pump.npshr * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">1.5</span>);
+  } <span class="code-keyword">else</span> {
+    <span class="code-comment">// Curva padrão</span>
+    <span class="code-keyword">return</span> pump.npshr * (<span class="code-number">1</span> + <span class="code-number">2</span> * Math.<span class="code-function">pow</span>(normalizedFlow, <span class="code-number">2</span>));
+  }
+});
+        </div>
+
+        <h3>4. Curva de Rendimento</h3>
+        <div class="formula">
+            <div class="formula-title">Eficiência da Bomba</div>
+            <strong>η(Q) = η<sub>max</sub> × (1 - 0.5 × (Q/Q<sub>ótima</sub> - 1)²)</strong>
+            <br><small>Onde Q<sub>ótima</sub> é tipicamente 70% da vazão máxima</small>
+        </div>
+
+        <div class="code-block">
+<span class="code-comment">// Cálculo da curva de eficiência</span>
+<span class="code-keyword">const</span> <span class="code-function">efficiencyCurve</span> = flowPoints.<span class="code-function">map</span>(flow => {
+  <span class="code-keyword">const</span> normalizedFlow = flow / pump.maxFlow;
+  
+  <span class="code-keyword">if</span> (pump.id === <span class="code-string">'bomba-diamante'</span>) {
+    <span class="code-comment">// Pico de eficiência em 60% da vazão máxima</span>
+    <span class="code-keyword">const</span> optimalPoint = <span class="code-number">0.6</span>;
+    <span class="code-keyword">const</span> efficiency = pump.efficiency * 
+      (<span class="code-number">1</span> - <span class="code-number">0.4</span> * Math.<span class="code-function">pow</span>(normalizedFlow - optimalPoint, <span class="code-number">2</span>));
+    <span class="code-keyword">return</span> Math.<span class="code-function">max</span>(<span class="code-number">20</span>, Math.<span class="code-function">min</span>(pump.efficiency, efficiency));
+  } <span class="code-keyword">else</span> {
+    <span class="code-comment">// Pico de eficiência em 70% da vazão máxima</span>
+    <span class="code-keyword">const</span> optimalPoint = <span class="code-number">0.7</span>;
+    <span class="code-keyword">const</span> efficiency = pump.efficiency * 
+      (<span class="code-number">1</span> - <span class="code-number">0.5</span> * Math.<span class="code-function">pow</span>(normalizedFlow - optimalPoint, <span class="code-number">2</span>));
+    <span class="code-keyword">return</span> Math.<span class="code-function">max</span>(<span class="code-number">0</span>, Math.<span class="code-function">min</span>(pump.efficiency, efficiency));
+  }
+});
+        </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <section class="section avoid-break">
+        <h2>🔍 Interpolação Linear</h2>
+        <p>Para calcular valores precisos em pontos específicos de operação, o sistema utiliza interpolação linear entre os pontos das curvas geradas.</p>
+
+        <div class="formula">
+            <div class="formula-title">Fórmula de Interpolação Linear</div>
+            <strong>y = y₁ + (x - x₁) × (y₂ - y₁) / (x₂ - x₁)</strong>
+            <br><small>Onde (x₁,y₁) e (x₂,y₂) são os pontos conhecidos mais próximos</small>
+        </div>
+
+        <div class="code-block">
+<span class="code-comment">// Função de interpolação linear</span>
+<span class="code-keyword">function</span> <span class="code-function">interpolateValue</span>(xArray: <span class="code-keyword">number</span>[], yArray: <span class="code-keyword">number</span>[], x: <span class="code-keyword">number</span>): <span class="code-keyword">number</span> {
+  <span class="code-comment">// Casos extremos</span>
+  <span class="code-keyword">if</span> (x <= xArray[<span class="code-number">0</span>]) <span class="code-keyword">return</span> yArray[<span class="code-number">0</span>];
+  <span class="code-keyword">if</span> (x >= xArray[xArray.length - <span class="code-number">1</span>]) <span class="code-keyword">return</span> yArray[yArray.length - <span class="code-number">1</span>];
+
+  <span class="code-comment">// Encontrar pontos adjacentes</span>
+  <span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-number">0</span>; i < xArray.length - <span class="code-number">1</span>; i++) {
+    <span class="code-keyword">if</span> (x >= xArray[i] && x <= xArray[i + <span class="code-number">1</span>]) {
+      <span class="code-comment">// Calcular razão de interpolação</span>
+      <span class="code-keyword">const</span> ratio = (x - xArray[i]) / (xArray[i + <span class="code-number">1</span>] - xArray[i]);
+      <span class="code-comment">// Retornar valor interpolado</span>
+      <span class="code-keyword">return</span> yArray[i] + ratio * (yArray[i + <span class="code-number">1</span>] - yArray[i]);
+    }
+  }
+  
+  <span class="code-keyword">return</span> yArray[<span class="code-number">0</span>];
+}
+        </div>
+
+        <h3>Cálculo de Ponto de Operação</h3>
+        <div class="code-block">
+<span class="code-comment">// Função principal para calcular ponto de operação</span>
+<span class="code-keyword">export function</span> <span class="code-function">calculatePumpPoint</span>(
+  pump: PumpModel, 
+  flow: <span class="code-keyword">number</span>, 
+  head: <span class="code-keyword">number</span>
+): PumpPoint {
+  <span class="code-comment">// Gerar curvas da bomba</span>
+  <span class="code-keyword">const</span> curves = <span class="code-function">generatePumpCurves</span>(pump);
+  
+  <span class="code-comment">// Interpolar valores para a vazão especificada</span>
+  <span class="code-keyword">const</span> interpolatedPower = <span class="code-function">interpolateValue</span>(curves.flow, curves.power, flow);
+  <span class="code-keyword">const</span> interpolatedNPSH = <span class="code-function">interpolateValue</span>(curves.flow, curves.npsh, flow);
+  <span class="code-keyword">const</span> interpolatedEfficiency = <span class="code-function">interpolateValue</span>(curves.flow, curves.efficiency, flow);
+
+  <span class="code-comment">// Retornar ponto calculado</span>
+  <span class="code-keyword">return</span> {
+    flow,
+    head,
+    power: interpolatedPower,
+    npsh: interpolatedNPSH,
+    efficiency: interpolatedEfficiency
+  };
+}
+        </div>
+    </section>
+
+    <section class="section avoid-break">
+        <h2>🛠 Tecnologias Utilizadas</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <div class="tech-name">React 18</div>
+                <div class="tech-desc">Biblioteca para interface de usuário</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-name">TypeScript</div>
+                <div class="tech-desc">Tipagem estática para JavaScript</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-name">Chart.js</div>
+                <div class="tech-desc">Biblioteca para gráficos interativos</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-name">Tailwind CSS</div>
+                <div class="tech-desc">Framework CSS utilitário</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-name">Vite</div>
+                <div class="tech-desc">Build tool e servidor de desenvolvimento</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-name">Vitest</div>
+                <div class="tech-desc">Framework de testes unitários</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section avoid-break">
+        <h2>📊 Estrutura de Dados</h2>
+        <h3>Interface PumpModel</h3>
+        <div class="code-block">
+<span class="code-keyword">export interface</span> <span class="code-function">PumpModel</span> {
+  id: <span class="code-keyword">string</span>;                    <span class="code-comment">// Identificador único</span>
+  name: <span class="code-keyword">string</span>;                  <span class="code-comment">// Nome da bomba</span>
+  manufacturer: <span class="code-keyword">string</span>;          <span class="code-comment">// Fabricante</span>
+  type: <span class="code-keyword">string</span>;                  <span class="code-comment">// Tipo de bomba</span>
+  efficiency: <span class="code-keyword">number</span>;            <span class="code-comment">// Rendimento máximo (%)</span>
+  npshr: <span class="code-keyword">number</span>;                 <span class="code-comment">// NPSH requerido (mca)</span>
+  power: <span class="code-keyword">number</span>;                 <span class="code-comment">// Potência nominal (cv)</span>
+  rotation: <span class="code-keyword">number</span>;              <span class="code-comment">// Rotação (rpm)</span>
+  maxFlow: <span class="code-keyword">number</span>;               <span class="code-comment">// Vazão máxima (m³/h)</span>
+  maxHead: <span class="code-keyword">number</span>;               <span class="code-comment">// Altura máxima (m)</span>
+  minHead?: <span class="code-keyword">number</span>;              <span class="code-comment">// Altura mínima (m) - opcional</span>
+}
+        </div>
+
+        <h3>Interface ChartData</h3>
+        <div class="code-block">
+<span class="code-keyword">export interface</span> <span class="code-function">ChartData</span> {
+  flow: <span class="code-keyword">number</span>[];                <span class="code-comment">// Array de vazões (m³/h)</span>
+  head: <span class="code-keyword">number</span>[];                <span class="code-comment">// Array de alturas (m)</span>
+  power: <span class="code-keyword">number</span>[];               <span class="code-comment">// Array de potências (cv)</span>
+  npsh: <span class="code-keyword">number</span>[];                <span class="code-comment">// Array de NPSH (mca)</span>
+  efficiency: <span class="code-keyword">number</span>[];          <span class="code-comment">// Array de eficiências (%)</span>
+}
+        </div>
+
+        <h3>Interface PumpPoint</h3>
+        <div class="code-block">
+<span class="code-keyword">export interface</span> <span class="code-function">PumpPoint</span> {
+  flow: <span class="code-keyword">number</span>;                  <span class="code-comment">// Vazão do ponto (m³/h)</span>
+  head: <span class="code-keyword">number</span>;                  <span class="code-comment">// Altura do ponto (m)</span>
+  power: <span class="code-keyword">number</span>;                 <span class="code-comment">// Potência calculada (cv)</span>
+  npsh: <span class="code-keyword">number</span>;                  <span class="code-comment">// NPSH calculado (mca)</span>
+  efficiency: <span class="code-keyword">number</span>;            <span class="code-comment">// Eficiência calculada (%)</span>
+}
+        </div>
+    </section>
+
+    <section class="section avoid-break">
+        <h2>🧪 Cobertura de Testes</h2>
+        <p>O sistema possui uma suíte completa de testes automatizados que garantem a qualidade e confiabilidade dos cálculos.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Módulo</th>
+                    <th>Tipo de Teste</th>
+                    <th>Cobertura</th>
+                    <th>Casos Testados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>pumpCalculations.ts</td>
+                    <td>Unitário</td>
+                    <td>100%</td>
+                    <td>Geração de curvas, interpolação, casos extremos</td>
+                </tr>
+                <tr>
+                    <td>PumpSelector</td>
+                    <td>Componente</td>
+                    <td>100%</td>
+                    <td>Seleção, especificações, eventos</td>
+                </tr>
+                <tr>
+                    <td>ControlPanel</td>
+                    <td>Componente</td>
+                    <td>100%</td>
+                    <td>Inputs, validação, cálculos</td>
+                </tr>
+                <tr>
+                    <td>PumpChart</td>
+                    <td>Componente</td>
+                    <td>95%</td>
+                    <td>Renderização, dados, interações</td>
+                </tr>
+                <tr>
+                    <td>App</td>
+                    <td>Integração</td>
+                    <td>95%</td>
+                    <td>Fluxo completo, estados, edge cases</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Exemplos de Casos de Teste</h3>
+        <div class="code-block">
+<span class="code-comment">// Teste de geração de curvas</span>
+<span class="code-function">it</span>(<span class="code-string">'should generate curves with correct number of points'</span>, () => {
+  <span class="code-keyword">const</span> curves = <span class="code-function">generatePumpCurves</span>(mockPump);
+  
+  <span class="code-function">expect</span>(curves.flow).<span class="code-function">toHaveLength</span>(<span class="code-number">21</span>);
+  <span class="code-function">expect</span>(curves.head).<span class="code-function">toHaveLength</span>(<span class="code-number">21</span>);
+  <span class="code-function">expect</span>(curves.power).<span class="code-function">toHaveLength</span>(<span class="code-number">21</span>);
+  <span class="code-function">expect</span>(curves.npsh).<span class="code-function">toHaveLength</span>(<span class="code-number">21</span>);
+  <span class="code-function">expect</span>(curves.efficiency).<span class="code-function">toHaveLength</span>(<span class="code-number">21</span>);
+});
+
+<span class="code-comment">// Teste de valores negativos para Bomba Diamante</span>
+<span class="code-function">it</span>(<span class="code-string">'should handle Bomba Diamante with negative head'</span>, () => {
+  <span class="code-keyword">const</span> result = <span class="code-function">calculatePumpPoint</span>(mockBombaDiamante, <span class="code-number">150</span>, <span class="code-number">-5</span>);
+  
+  <span class="code-function">expect</span>(result.flow).<span class="code-function">toBe</span>(<span class="code-number">150</span>);
+  <span class="code-function">expect</span>(result.head).<span class="code-function">toBe</span>(<span class="code-number">-5</span>);
+  <span class="code-function">expect</span>(result.power).<span class="code-function">toBeGreaterThan</span>(<span class="code-number">0</span>);
+});
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p><strong>Sistema de Seleção de Bombas</strong> - Documentação Técnica</p>
+        <p>Desenvolvido com React + TypeScript | Versão 1.0</p>
+        <p>© 2024 - Todos os direitos reservados</p>
+        <p style="margin-top: 15px; font-size: 0.8em;">
+            Esta documentação foi gerada automaticamente e otimizada para impressão em PDF.<br>
+            Para mais informações, acesse: <strong>https://fastidious-cranachan-b93ba3.netlify.app</strong>
+        </p>
+    </footer>
+</body>
+</html>
