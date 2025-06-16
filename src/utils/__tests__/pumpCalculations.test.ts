@@ -25,7 +25,7 @@ describe('pumpCalculations', () => {
     npshr: 25,
     power: 46.5,
     rotation: 1700,
-    maxFlow: 180,
+    maxFlow: 400,
     maxHead: 200,
     minHead: -10,
   };
