@@ -26,36 +26,6 @@ export function ControlPanel({
   // Determinar o valor mínimo da altura baseado na bomba
   const minHead = pump.minHead !== undefined ? pump.minHead : 0;
   
-  // Função para lidar com mudanças no campo de altura
-  const handleHeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    
-    // Permitir campo vazio
-    if (value === '') {
-      onHeadChange(0);
-      return;
-    }
-    
-    // Permitir apenas números, ponto decimal e sinal negativo
-    if (!/^-?\d*\.?\d*$/.test(value)) {
-      return; // Não atualizar se não for um número válido
-    }
-    
-    // Converter para número
-    const numValue = parseFloat(value);
-    
-    // Se for um número válido, atualizar
-    if (!isNaN(numValue)) {
-      // Verificar limites apenas quando o valor estiver completo
-      if (numValue >= minHead && numValue <= pump.maxHead) {
-        onHeadChange(numValue);
-      } else {
-        // Ainda permitir a digitação, mas não validar até estar completo
-        onHeadChange(numValue);
-      }
-    }
-  };
-  
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="flex items-center gap-3 mb-6">
@@ -88,9 +58,10 @@ export function ControlPanel({
             Altura (m)
           </label>
           <input
-            type="text"
+            type="number"
+            step="0.1"
             value={head}
-            onChange={handleHeadChange}
+            onChange={(e) => onHeadChange(Number(e.target.value))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             placeholder={`${minHead} - ${pump.maxHead}`}
           />
