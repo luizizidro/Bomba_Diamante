@@ -328,7 +328,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👥 Autores
 
-- **Seu Nome** - *Desenvolvimento inicial* - [SeuGitHub](https://github.com/seu-usuario)
+- **Luiz Henrique Figueiredo Izidro** - *Desenvolvimento inicial* - [SeuGitHub](https://github.com/seu-usuario)
 
 ## 🙏 Agradecimentos
 
