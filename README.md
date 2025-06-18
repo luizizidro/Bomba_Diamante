@@ -44,7 +44,7 @@ O Sistema de Seleção de Bombas é uma aplicação web desenvolvida para engenh
 
 3. **Bomba Diamante** - Bomba Personalizada
    - Potência: 46.5 cv
-   - Vazão máxima: 180 m³/h
+   - Vazão máxima: 400 m³/h
    - Altura: -10 a 200 m (suporta alturas negativas)
 
 ## ✨ Funcionalidades
@@ -283,10 +283,6 @@ npm run preview
 
 Não são necessárias variáveis de ambiente para este projeto.
 
-## 🤝 Contribuição
-
-Contribuições são sempre bem-vindas! Para contribuir:
-
 1. **Fork o projeto**
 2. **Crie uma branch para sua feature**
 ```bash
@@ -305,46 +301,7 @@ git push origin feature/AmazingFeature
 
 5. **Abra um Pull Request**
 
-### Diretrizes de Contribuição
-
-- Mantenha o código limpo e bem documentado
-- Adicione testes para novas funcionalidades
-- Siga os padrões de código existentes
-- Atualize a documentação quando necessário
-
-### Reportar Bugs
-
-Use as [Issues do GitHub](https://github.com/seu-usuario/pump-selection-system/issues) para reportar bugs. Inclua:
-
-- Descrição detalhada do problema
-- Passos para reproduzir
-- Comportamento esperado vs atual
-- Screenshots (se aplicável)
-- Informações do ambiente (browser, OS, etc.)
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## 👥 Autores
 
-- **Luiz Henrique Figueiredo Izidro** - *Desenvolvimento inicial* - [SeuGitHub](https://github.com/seu-usuario)
-
-## 🙏 Agradecimentos
-
-- Indústrias Schneider pelos dados técnicos das bombas BC-21
-- Comunidade React pela excelente documentação
-- Chart.js pela biblioteca de gráficos robusta
-- Tailwind CSS pelo framework CSS eficiente
-
-## 📞 Suporte
-
-Se você tiver dúvidas ou precisar de ajuda:
-
-- 📧 Email: seu-email@exemplo.com
-- 💬 Issues: [GitHub Issues](https://github.com/seu-usuario/pump-selection-system/issues)
-- 📖 Documentação: [Wiki do Projeto](https://github.com/seu-usuario/pump-selection-system/wiki)
-
----
-
-**Desenvolvido com ❤️ para a comunidade de engenharia**
+- **Luiz Henrique Figueiredo Izidro** - *Desenvolvimento inicial* - [MeuGit]([https://github.com/seu-usuario](https://github.com/luizizidro))
